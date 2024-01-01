@@ -1,5 +1,6 @@
 import FormField from "../../components/forms/FormField";
 import SubmitButton from "../../components/forms/SubmitButton";
+import AuthNav from "../../components/navegation/AuthNav";
 
 export default function Register() {
     return (
@@ -36,6 +37,8 @@ export default function Register() {
 
                     <SubmitButton value="Registrarse"/>
                 </form>
+
+                <AuthNav/>
             </div>
         </>
     )
