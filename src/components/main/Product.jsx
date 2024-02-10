@@ -4,6 +4,7 @@ import useKiosk from "../../hooks/useKiosk"
 
 export default function Product( {product} ) {
     const { name, price, image } = product
+    const { handleClickModal, getProductModal } = useKiosk()
 
     return (
         <div className="p-3 border shadow bg-white grid grid-cols-1">
@@ -23,6 +24,10 @@ export default function Product( {product} ) {
             <button
             className="self-end w-full mt-5 p-3 uppercase font-bold bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white transition-colors"
             type="button"
+            onClick={()=> {
+                handleClickModal()
+                getProductModal(product)
+            }}
             >
                 Agregar
             </button>
