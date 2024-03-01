@@ -1,15 +1,20 @@
 import { useState } from "react"
 import { numberToPrice } from "../../helpers"
 import useKiosk from "../../hooks/useKiosk"
+import useOrder from "../../hooks/useOrder"
 
 export const ModalProduct = ( { product }) => {
     const { name, price, image, category_id, id } = product
     const { handleClickModal } = useKiosk()
+    const { order, addCartProduct } = useOrder()
     const [amount, setAmount] = useState(1)
+
+    const productIsOnCart = !!order.filter(product => product.id === id)[0]
+    
+
 
     const updateAmount = (increment = true)=> {
         if(!increment && amount <= 1) return
-        let update
 
         increment
             ? setAmount(amount + 1)
@@ -66,9 +71,9 @@ export const ModalProduct = ( { product }) => {
 
                 </div>
 
-                <button 
+                <button type="button"
                     className="px-5 py-2 mt-5 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-bold uppercase rounded"
-                    type="button"
+                    onClick={()=> addCartProduct(product, amount)}
                     >
                     Añadir al Pedido
                 </button>

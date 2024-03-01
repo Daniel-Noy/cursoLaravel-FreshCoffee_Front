@@ -4,11 +4,14 @@ import { RouterProvider } from 'react-router-dom'
 import router from './router'
 import './index.css'
 import { KioskProvider } from './context/KioskProvider'
+import { OrderProvider } from './context/OrderProvider'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <KioskProvider>
-      <RouterProvider router={router} />
+      <OrderProvider>
+        <RouterProvider router={router} />
+      </OrderProvider>
     </KioskProvider>
   </React.StrictMode>,
 )

@@ -1,6 +1,6 @@
 import { numberToPrice } from "../../helpers"
 import useKiosk from "../../hooks/useKiosk"
-
+import PrimaryButtonLg from "../buttons/PrimaryButtonLg"
 
 export default function Product( {product} ) {
     const { name, price, image } = product
@@ -21,16 +21,12 @@ export default function Product( {product} ) {
                 </p>
             </div>
 
-            <button
-            className="self-end w-full mt-5 p-3 uppercase font-bold bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white transition-colors"
-            type="button"
-            onClick={()=> {
-                handleClickModal()
-                getProductModal(product)
-            }}
-            >
-                Agregar
-            </button>
+            <PrimaryButtonLg
+                value='Ver Detalles'
+                clickEvent={()=> {
+                    handleClickModal()
+                    getProductModal(product)
+                }}/>
         </div>
     )
 }
