@@ -2,16 +2,16 @@ import { useState } from "react"
 import { numberToPrice } from "../../helpers"
 import useKiosk from "../../hooks/useKiosk"
 import useOrder from "../../hooks/useOrder"
+import { PrimaryButtonMd } from "../buttons/PrimaryButtonMd"
 
 export const ModalProduct = ( { product }) => {
-    const { name, price, image, category_id, id } = product
     const { handleClickModal } = useKiosk()
-    const { order, addCartProduct } = useOrder()
-    const [amount, setAmount] = useState(1)
+    const { order, addCartProduct, removeCartProduct, updateCartProduct } = useOrder()
 
-    const productIsOnCart = !!order.filter(product => product.id === id)[0]
-    
+    const productOnCart = order.filter(searchProduct => searchProduct.id === product.id)[0]
+    const { name, price, image, id } = productOnCart ?? product
 
+    const [amount, setAmount] = useState(productOnCart ? productOnCart.amount : 1)
 
     const updateAmount = (increment = true)=> {
         if(!increment && amount <= 1) return
@@ -26,10 +26,11 @@ export const ModalProduct = ( { product }) => {
             <div className="md:w-1/3">
                 <img
                 src={`/img/images/${image}.jpg`}
-                alt={`Imagen Producto: ${name}`} 
+                alt={`Imagen Producto: ${name}`}
                 />
             </div>
             <div className="md:w-2/3">
+                {/* //? Close button  */}
                 <div className="flex justify-end">
                     <button className="p-1 hover:bg-slate-100 active:bg-slate-200 rounded-full transition-colors"
                         onClick={handleClickModal}
@@ -49,7 +50,7 @@ export const ModalProduct = ( { product }) => {
 
                 <div className="flex items-center gap-4 mt-5">
                     
-                    {/* //?Decrement button */}
+                    {/* //? Decrement button */}
                     <button className="p-1 hover:bg-slate-300 active:bg-slate-400 rounded-full transition-colors active:transition-none"
                         onClick={()=> updateAmount(false)}
                         >
@@ -71,12 +72,34 @@ export const ModalProduct = ( { product }) => {
 
                 </div>
 
-                <button type="button"
-                    className="px-5 py-2 mt-5 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-bold uppercase rounded"
-                    onClick={()=> addCartProduct(product, amount)}
-                    >
-                    Añadir al Pedido
-                </button>
+                {/* //? Action buttons */}
+                {productOnCart
+                ? productOnCart.amount === amount 
+                    ? (
+                        <PrimaryButtonMd
+                            value='Quitar del pedido'
+                            clickEvent={()=> removeCartProduct(id)}
+                        />
+                    )
+                    : (
+                        <PrimaryButtonMd
+                            value='Actualizar pedido'
+                            clickEvent={()=> {
+                                updateCartProduct(id, amount)
+                                handleClickModal()
+                            }}
+                        />
+                    )
+                : (
+                    <PrimaryButtonMd
+                        value='Añadir al pedido'
+                        clickEvent={()=> {
+                            addCartProduct(product, amount)
+                            handleClickModal()
+                        }}
+                    />
+                )}
+                
             </div>
 
         </div>

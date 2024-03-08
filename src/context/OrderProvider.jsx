@@ -11,11 +11,29 @@ export const OrderProvider = ({ children })=> {
         setOrder([...order, copyProduct])
     }
 
+    const removeCartProduct = (productId) => {
+        const updatedProducts = order.filter(product => product.id !== productId)
+        setOrder(updatedProducts)
+    }
+
+    const updateCartProduct = (productId, amount) => {
+        const updatedProducts = order.map(product => {
+            if( product.id === productId ) {
+                product.amount = amount
+            }
+            return product
+        })
+
+        setOrder(updatedProducts)
+    }
+
     return(
         <OrderContext.Provider
             value={{
                 order,
-                addCartProduct
+                addCartProduct,
+                removeCartProduct,
+                updateCartProduct
             }}
         >
             {children}
