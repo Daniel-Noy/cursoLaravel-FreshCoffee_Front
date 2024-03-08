@@ -4,7 +4,7 @@ import PrimaryButtonLg from "../buttons/PrimaryButtonLg"
 
 export default function Product( {product} ) {
     const { name, price, image } = product
-    const { handleClickModal, getProductModal } = useKiosk()
+    const { handleClickModal, getProductModal, toasty } = useKiosk()
 
     return (
         <div className="p-3 border shadow bg-white grid grid-cols-1">

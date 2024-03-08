@@ -3,6 +3,7 @@ import { numberToPrice } from "../../helpers"
 import useKiosk from "../../hooks/useKiosk"
 import useOrder from "../../hooks/useOrder"
 import { PrimaryButtonMd } from "../buttons/PrimaryButtonMd"
+import { DeleteButtonMd } from "../buttons/DeleteButtonMd"
 
 export const ModalProduct = ( { product }) => {
     const { handleClickModal } = useKiosk()
@@ -76,7 +77,7 @@ export const ModalProduct = ( { product }) => {
                 {productOnCart
                 ? productOnCart.amount === amount 
                     ? (
-                        <PrimaryButtonMd
+                        <DeleteButtonMd
                             value='Quitar del pedido'
                             clickEvent={()=> removeCartProduct(id)}
                         />

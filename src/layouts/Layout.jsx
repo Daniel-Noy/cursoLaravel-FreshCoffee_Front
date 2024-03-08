@@ -1,9 +1,12 @@
-import { Outlet } from "react-router-dom"
 import ReactModal from "react-modal"
 import Sidebar from "../components/main/Sidebar"
 import Summary from "../components/main/Summary"
 import useKiosk from "../hooks/useKiosk"
+
+import { Outlet } from "react-router-dom"
 import { ModalProduct } from "../components/modal/ModalProduct"
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.min.css'
 
 const customStylesModal = {
     overlay: {
@@ -39,6 +42,8 @@ export default function Layout() {
             >
                 <ModalProduct product={selectedProduct}/>
             </ReactModal>
+            
+            <ToastContainer autoClose={2000} pauseOnHover={false} pauseOnFocusLoss={false} stacked/>
         </>
     )
 }

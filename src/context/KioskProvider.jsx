@@ -1,5 +1,5 @@
 import { createContext, useState } from "react"
-import {categories as categoriesDB} from '../data/categories'
+import { categories as categoriesDB } from '../data/categories'
 
 const KioskContext = createContext();
 
