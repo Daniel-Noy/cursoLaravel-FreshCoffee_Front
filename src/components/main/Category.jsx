@@ -1,6 +1,6 @@
 import useKiosk from "../../hooks/useKiosk"
 
-export default function Category( {category} ) {
+export default function Category({ category }) {
     const { id, icon, name } = category
     const { handleClickCategory, currentCategory } = useKiosk()
 

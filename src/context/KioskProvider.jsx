@@ -1,12 +1,13 @@
 import { createContext, useState } from "react"
-import { categories as categoriesDB } from '../data/categories'
+import { useEffect } from "react";
+import axiosClient from "../config/axios"
 
 const KioskContext = createContext();
 
 export const KioskProvider = ({ children })=> {
     //? Estados de categorias
-    const [ categories, setCategories ] = useState(categoriesDB)
-    const [ currentCategory, setCurrentCategory ] = useState(categories[0])
+    const [ categories, setCategories ] = useState([])
+    const [ currentCategory, setCurrentCategory ] = useState({})
 
     //? Estado del producto seleccionado
     const [ selectedProduct, setSelectedProduct] = useState({})
@@ -22,6 +23,20 @@ export const KioskProvider = ({ children })=> {
 
     const handleClickModal = () => setModal(!modal)
     const getProductModal = (product) => setSelectedProduct(product)
+
+    const getCategories = async ()=> {
+        try {
+            const {data} = await axiosClient.get('/categories')
+            setCategories(data.data)
+            setCurrentCategory(data.data[0])
+        } catch {
+            console.error('Error en el servidor');
+        }
+    }
+    
+    useEffect(()=> {
+        getCategories()
+    }, [])
 
     return(
         <KioskContext.Provider

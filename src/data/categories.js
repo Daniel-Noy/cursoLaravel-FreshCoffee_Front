@@ -1,10 +1,5 @@
 const categories = [
     {
-        icon: "menu",
-        name: "Todos los productos",
-        id:0
-    },
-    {
         icon: "cafe",
         name: "Café",
         id:1
