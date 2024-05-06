@@ -1,9 +1,19 @@
+import useSWR from 'swr';
 import Product from '../../components/main/Product';
-import { products as data } from '../../data/products'
 import useKiosk from '../../hooks/useKiosk';
+import axiosClient from '../../config/axios';
 
 export default function Inicio() {
     const { currentCategory } = useKiosk()
+
+    //? SWR
+    const fetcher = async () => {
+        const { data } = await axiosClient('/products')
+        return data.data;
+    }
+    const { data, isLoading } = useSWR('/productos', fetcher)
+    if( isLoading ) return 'Cargando...'
+
     const products = currentCategory.id !== 0
         ? data.filter(product => product.category_id === currentCategory.id)
         : data
