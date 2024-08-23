@@ -14,9 +14,7 @@ export default function Inicio() {
     const { data, isLoading } = useSWR('/productos', fetcher)
     if( isLoading ) return 'Cargando...'
 
-    const products = currentCategory.id !== 0
-        ? data.filter(product => product.category_id === currentCategory.id)
-        : data
+    const products = data.filter(product => product.category_id === currentCategory.id)
 
     return (
         <>
