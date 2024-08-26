@@ -2,13 +2,17 @@ import { createRef, useState } from "react"
 import FormField from "../../components/forms/FormField"
 import SubmitButton from "../../components/forms/SubmitButton"
 import AuthNav from "../../components/navegation/AuthNav"
-import axiosClient from "../../config/axios"
+import { useAuth } from "../../hooks/useAuth"
 
 export default function Login() {
     const emailRef = createRef()
     const passRef = createRef()
 
     const [formErrors, setFormErrors] = useState({});
+    const { login } = useAuth({
+        middleware: 'guest',
+        url: '/'
+    })
 
     const handleSubmit = async e => {
         e.preventDefault()
@@ -17,13 +21,7 @@ export default function Login() {
             password: passRef.current.value,
         }
 
-        try {
-            const { data } = await axiosClient.post('/login', dataForm)
-            localStorage.setItem('AUTH_TOKEN', data.token)
-            setFormErrors({})
-        } catch (error) {
-            setFormErrors(error.response.data.errors);
-        }
+        login(dataForm, setFormErrors)
     }
 
     return (

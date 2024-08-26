@@ -7,6 +7,7 @@ import { Outlet } from "react-router-dom"
 import { ModalProduct } from "../components/modal/ModalProduct"
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.min.css'
+import { useAuth } from "../hooks/useAuth"
 
 const customStylesModal = {
     overlay: {
@@ -21,6 +22,7 @@ const customStylesModal = {
 
 export default function Layout() {
     const { modal, handleClickModal, selectedProduct } = useKiosk()
+    const {user, error} = useAuth({middleware: 'auth', url: '/auth/login'})
 
     return (
         <>

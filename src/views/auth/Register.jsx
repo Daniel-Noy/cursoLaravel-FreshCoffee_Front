@@ -1,5 +1,5 @@
 import { createRef, useState } from "react";
-import axiosClient from "../../config/axios"
+import { useAuth } from "../../hooks/useAuth";
 
 import FormField from "../../components/forms/FormField";
 import SubmitButton from "../../components/forms/SubmitButton";
@@ -12,6 +12,7 @@ export default function Register() {
     const passConfirmRef = createRef()
 
     const [formErrors, setFormErrors] = useState({});
+    const { register } = useAuth({ middleware: 'guest', url: '/'})
 
     const handleSubmit = async e => {
         e.preventDefault()
@@ -22,12 +23,7 @@ export default function Register() {
             password_confirmation: passConfirmRef.current.value
         }
 
-        try {
-            const req = await axiosClient.post('/registro', data)
-            setFormErrors({})
-        } catch (error) {
-            setFormErrors(error.response.data.errors);
-        }
+        register(data, setFormErrors)
     }
 
     return (
