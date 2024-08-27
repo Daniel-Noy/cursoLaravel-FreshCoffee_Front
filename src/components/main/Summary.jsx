@@ -4,7 +4,7 @@ import { SummaryProduct } from './SummaryProduct'
 import { numberToPrice } from '../../helpers';
 
 export default function Summary() {
-    const { order, total } = useOrder()
+    const { order, total, sendOrder} = useOrder()
     
     return (
         <aside className=" grid grid-rows-summaryGrid w-96 h-screen p-5">
@@ -35,7 +35,11 @@ export default function Summary() {
                     <span className='font-black'> {numberToPrice(total)}</span>
                 </p>
 
-                <form className='w-full'>
+                <form className='w-full'
+                    onSubmit={(e)=> {
+                        e.preventDefault()
+                        sendOrder()
+                    }}>
                     <div className="mt-1">
                         <SubmitButton value='Confirmar pedido' action={null} disabled={order.length === 0} />
                         

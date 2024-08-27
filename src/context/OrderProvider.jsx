@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { toast } from 'react-toastify'
 import { totalOrder } from "../helpers";
+import axiosClient from "../config/axios";
 
 
 const OrderContext = createContext()
@@ -40,6 +41,27 @@ export const OrderProvider = ({ children })=> {
         toast.info('Orden Actualizada')
     }
 
+    const sendOrder = async () => {
+        const token = localStorage.getItem('AUTH_TOKEN')
+        const { data } = await axiosClient.post('/orders', {
+            orderProducts: order.map( product =>{
+                return { id: product.id, amount: product.amount}
+            }),
+            total: total
+        }, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+
+        if(!data.status) {
+            return toast.error('Hubo un error al procesar tu pedido')
+        }
+        setOrder([])
+        return toast.success('Pedido recibido, se enviará en unos minutos')
+        
+    }
+
     return(
         <OrderContext.Provider
             value={{
@@ -48,6 +70,7 @@ export const OrderProvider = ({ children })=> {
                 removeCartProduct,
                 updateCartProduct,
                 total,
+                sendOrder
             }}
         >
             {children}
